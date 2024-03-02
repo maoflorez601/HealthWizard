@@ -2,7 +2,6 @@
 
 Las funcionalidades de Login permiten a la aplicación gestionar y controlar el acceso de los usuarios a la plataforma, asi como la privacidad y la seguridad de la información.
 
-```markdown
 # Registro e Inicio de Sesión
 ## Título: Acceso a HealthBoost
 ### Descripción
@@ -74,7 +73,6 @@ Como usuario interesado en mejorar mi salud y bienestar, quiero poder registrarm
 3. Confirmar que la contraseña está cifrada y almacenada de manera segura.
 
 **Resultado Esperado:** La contraseña debe estar cifrada y almacenada de forma segura para garantizar la seguridad de los datos.
-```
 
 ## Arquitecura considerada:
 
