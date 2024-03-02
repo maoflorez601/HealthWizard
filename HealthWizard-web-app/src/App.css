@@ -1,0 +1,131 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #292734;
+  min-height: 20vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  background-color: #292734
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* IMPORTADOS DE DISEÑO LOGIN Y COLORES */
+
+label {
+  color: #ffffff;
+}
+
+.login-form {
+  background-color: #292734;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 20px 0px #000;
+}
+
+.panel {
+  text-align: center;
+}
+
+.panel h2 {
+  font-weight: bold;
+  color: #ffd166;
+}
+
+.panel p {
+  color: #a3a1ac;
+}
+
+.form-control {
+  background-color: #35343f;
+  color: #ffffff;
+}
+
+.btn-primary {
+  background-color: #6a57af;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #7c68bc;
+}
+
+a {
+  color: #ffd166;
+}
+
+a:hover {
+  color: #ffd166;
+  text-decoration: none;
+}
+
+
+
+.app-title-wrapper {
+  display: inline;
+  align-items: center;
+  justify-content: center; /* Centrar horizontalmente */
+}
+
+.app-title {
+  font-size: 36px;
+  font-weight: bold;
+  color: #ffd166;
+  margin-bottom: 20px;
+}
+
+.app-symbol {
+  width: 100px; /* Tamaño del símbolo de la imagen */
+  height: auto;
+  margin-right: 10px;
+}
+
+.app-intro {
+  color: #a3a1ac;
+  margin-bottom: 30px;
+}
+
+/* Estilos para los placeholders */
+::placeholder {
+  color: #ffffff; /* Color del placeholder */
+  opacity: 0.7; /* Opacidad del placeholder */
+}
+
+/* Estilos para los placeholders en inputs no seleccionados */
+input:not(:focus)::placeholder {
+  color: #ffffff; /* Color del placeholder */
+  opacity: 0.7; /* Opacidad del placeholder */
+}
