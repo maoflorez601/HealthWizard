@@ -1,7 +1,8 @@
-# Documentación Login
+# Documentación Login:
 
 Las funcionalidades de Login permiten a la aplicación gestionar y controlar el acceso de los usuarios a la plataforma, asi como la privacidad y la seguridad de la información.
 
+```markdown
 # Registro e Inicio de Sesión
 ## Título: Acceso a HealthBoost
 ### Descripción
@@ -32,7 +33,6 @@ Como usuario interesado en mejorar mi salud y bienestar, quiero poder registrarm
 - El usuario recibe un correo electrónico con un enlace seguro para restablecer la contraseña.
 - Después de restablecer la contraseña, el usuario puede iniciar sesión con la nueva contraseña.
 
-```markdown
 # Casos de Prueba
 
 ## CP1.1 - Registro Exitoso
@@ -75,3 +75,8 @@ Como usuario interesado en mejorar mi salud y bienestar, quiero poder registrarm
 
 **Resultado Esperado:** La contraseña debe estar cifrada y almacenada de forma segura para garantizar la seguridad de los datos.
 ```
+
+## Arquitecura considerada:
+
+![Arquitectura Login](https://github.com/maoflorez601/HealthWizard/blob/main/Arquitectura_Login.pdf)
+
