@@ -78,5 +78,5 @@ Como usuario interesado en mejorar mi salud y bienestar, quiero poder registrarm
 
 ## Arquitecura considerada:
 
-![Arquitectura Login](https://github.com/maoflorez601/HealthWizard/blob/main/Arquitectura_Login.pdf)
+![](https://github.com/maoflorez601/HealthWizard/blob/main/Arquitectura_Login.pdf)
 
