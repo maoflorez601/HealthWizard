@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore'
 import { db } from '../firebaseConfig/firebase'
 
+import { getAuth } from "firebase/auth";
+
 //import styles
 import Swal from 'sweetalert2'
 
@@ -16,6 +18,9 @@ const Show = () => {
 
     // 2. Referencias a la DB Firestore
     const productsCollection = collection(db, "products");
+
+    const [user, setUser] = useState(null);
+    const auth = getAuth();
 
     // 3. Funcion para mostras  TODOS los docs
     const getProducts = async () => {
@@ -60,8 +65,13 @@ const Show = () => {
 
     // 6. Uso de useEffect
     useEffect(() => {
-      getProducts()
-      // eslint-disable-next-line
+        getProducts()
+
+        const unsubscribe = auth.onAuthStateChanged((user) => { //manejo de sesión activa
+            setUser(user);
+            });        
+        // eslint-disable-next-line
+        return () => unsubscribe(); // Limpia el observador cuando el componente se desmonta
     }, [])
     
 
@@ -70,41 +80,44 @@ const Show = () => {
         //<div>Show</div>
         <>
         <div className='container'>
-            <div className='row'>
-                <div className='col'>
-                    <div className='d-grid gap-2'>
-                        <Link to="/create" className='btn btn-success mt-2 mb-2'>Create</Link>
-                    </div>
+            {user ? (
+                <div className='row'>
+                    <div className='col'>
+                        <div className='d-grid gap-2'>
+                            <Link to="/create" className='btn btn-success mt-2 mb-2'>Create</Link>
+                        </div>
 
-                    <table className='table table-dark table-hover'>
-                        <thead>
-                            <tr>
-                                <th>Description</th>
-                                <th>Stock</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            { products.map( (product) => (
-                                <tr key={product.id}>
-                                    <td>{product.description}</td>
-                                    <td>{product.stock}</td>
-                                    <td>
-                                        <Link to={`/edit/${product.id}`} className='btn btn-light'>
-                                            <i className='fa-solid fa-pencil'></i>
-                                        </Link>
-                                        <button onClick={ () => { confirmDelete(product.id) }} className='btn btn-danger'>
-                                        <i className="fa-solid fa-trash"></i>
-                                        </button>
-                                    </td>
+                        <table className='table table-dark table-hover'>
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th>Stock</th>
+                                    <th>Actions</th>
                                 </tr>
-                            )) }
-                        </tbody>
+                            </thead>
 
-                    </table>
+                            <tbody>
+                                { products.map( (product) => (
+                                    <tr key={product.id}>
+                                        <td>{product.description}</td>
+                                        <td>{product.stock}</td>
+                                        <td>
+                                            <Link to={`/edit/${product.id}`} className='btn btn-light'>
+                                                <i className='fa-solid fa-pencil'></i>
+                                            </Link>
+                                            <button onClick={ () => { confirmDelete(product.id) }} className='btn btn-danger'>
+                                            <i className="fa-solid fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                )) }
+                            </tbody>
+
+                        </table>
+                    </div>
                 </div>
-            </div>
+            ) : ( <h1 className='text-danger'>Inicie sessión para acceder a este contenido</h1> )};
+            
         </div>
         </>
     )

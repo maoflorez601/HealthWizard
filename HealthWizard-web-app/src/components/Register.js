@@ -17,11 +17,11 @@ const Register = () => {
     const [ weight, setWeight] = useState(0)
     const [ height, setHeight] = useState(0)
     const [ objetive, setObjetive] = useState('')
-    const [ isFirebaseAuth, setIsFirebaseAuth] = useState(false)
 
-
+    // hook para navegacion
     const navigate = useNavigate()
 
+    //hook para operaciones con la db  de firebase
     const usersCollection = collection(db, "users")
 
     const registerUser = async (e) => {
@@ -31,22 +31,13 @@ const Register = () => {
                 // Signed up
                 const user = userCredential.user;
                 console.log(user.email + " successful registered in firebase.");
-                setIsFirebaseAuth(!isFirebaseAuth);
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                Swal.fire("Error al intentar registrar usuario",errorMessage,"error");
-                console.log("Error user registration " + error.code + ": " + error.message)
-              });
-
-        if (isFirebaseAuth){
-            e.preventDefault()
-            await addDoc( usersCollection, {name: name, email: email, password: password, birth: birth, weight: weight, height: height, objetive: objetive})
+                
+                //si la autorización es exitosa se procede a registrar al usuario en la db de firebase
+                addDoc( usersCollection, {name: name, email: email, password: password, birth: birth, weight: weight, height: height, objetive: objetive})
                 .then( (userCredential) => {
                     Swal.fire("Usuario registrado exitosamente.","Registro usuario","success");                
                     console.log("data successful insert in firestore.");
-                    navigate('/')
+                    navigate('/Show')
                 })
                 .catch((error) => {
                     const errorCode = error.code;
@@ -54,8 +45,13 @@ const Register = () => {
                     Swal.fire("Error al intentar registrar datos en BD",errorMessage,"error");
                     console.log("Error firestore registration: " + error.code + ": " + error.message)
                 });
-            
-        }
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                Swal.fire("Error al intentar registrar usuario",errorMessage,"error");
+                console.log("Error user registration " + error.code + ": " + error.message)
+              });
 
         
         // console.log("Nombre: " + e.target[0].value,)
