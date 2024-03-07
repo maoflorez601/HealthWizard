@@ -1,4 +1,12 @@
+
 .App {
+  height: 100vh; /* Altura del viewport */
+  width: 100vw; /* Ancho del viewport */
+  background-color: #292734; /* Color de fondo opcional  292734*/
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
 }
 
