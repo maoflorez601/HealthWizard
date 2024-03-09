@@ -18,8 +18,9 @@ npm install react-router-dom
 ########################################
 4. INSTALACIÓN PAQUETES DE ESTILOS (dentro de la carpeta creada en el punto 1)
 
-* BOOTSTRAP:
+* BOOTSTRAP CON REACT:
 npm i bootstrap
+npm install react-bootstrap
 
 * SWEETALERT + REACT CONTENT (para dialogos de mensajes)
 [https://sweetalert2.github.io/#download] 
