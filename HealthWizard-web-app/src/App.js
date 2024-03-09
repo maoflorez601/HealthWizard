@@ -5,6 +5,7 @@ import Create from './components/Create';
 import Register from './components/Register'
 import Login from './components/Login'
 import Recover from './components/Recover'
+import HealthProfile from './components/HealthProfile'
 import muscleWizard from './muscle_wizard.png';
 
 import React, { useState, useEffect } from 'react';
@@ -67,6 +68,7 @@ function App() {
             <Route path='/create' element={ <Create />} />
             <Route path='/edit/:id' element={ <Edit />} />
             <Route path='/show' element={ <Show />} />    
+            <Route path='/HealthProfile' element={ <HealthProfile />} />   
             {/* Redireccionar al inicio si el usuario intenta acceder a rutas protegidas sin iniciar sesión */}
             {!user && <Route path='/*' element={<Navigate to="/" />} />}      
           </Routes>

@@ -15,7 +15,8 @@ const Login = () => {
         await doSignInWithEmailAndPassword(email, password)
             .then( (userCredential) => {
                 // Loged in
-                navigate('/show')
+                //navigate('/show')
+                navigate('/HealthProfile')
                 //Swal.fire("Ingreso exitoso","","success");
 
             })
