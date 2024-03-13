@@ -2,6 +2,8 @@ import React, { useState, useEffect }from 'react'
 import { collection, addDoc } from 'firebase/firestore'
 import { db } from '../firebaseConfig/firebase'
 import { getAuth} from "firebase/auth";
+import { useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2'
 
 const HealthProfile = () => {
     // Lista de grupos de patologías y sus patologías asociadas
@@ -16,10 +18,12 @@ const HealthProfile = () => {
     const [selectGroup, setSelectGroup] = useState('');
     const [selectDisease, setSelectDisease] = useState('');
     const [listDiseases, setListDiseases] = useState([]);
-    const [heartRate, setHeartRate] = useState(''); //frec cardiaca
-    const [bloodPresure, setBloodPresure] = useState(''); //pres arterial
-    const [bloodOxigen, setBloodOxigen] = useState(''); // saturacion oxigeno en sangre
-    const [bloodGlucose, setBloodGlucose] = useState(''); //nivel glucosa en sangre
+    const [heartRate, setHeartRate] = useState(''); //frec cardiaca [normal entre 60 y 100 pulsaciones por minuto]
+    //const [bloodPresure, setBloodPresure] = useState(''); //pres arterial
+    const [sistole, setSistole] = useState(''); //pres arterial [normal alrededor de 120/80 mmHg]
+    const [diastole, setDiastole] = useState(''); //pres arterial [normal alrededor de 120/80 mmHg]
+    const [bloodOxigen, setBloodOxigen] = useState(''); // saturacion oxigeno en sangre [normal entre 95% y 100%]
+    const [bloodGlucose, setBloodGlucose] = useState(''); //nivel glucosa en sangre [normal entre 70 y 100 mg/dL]
 
     //hooks para las colecciones de la db de firestore
     const healthprofileCollection = collection(db, 'healthprofiles');
@@ -28,8 +32,8 @@ const HealthProfile = () => {
     const user = auth.currentUser;
     //onsole.log("user " + user.email);
 
-    
-
+    // hook para navegacion
+    const navigate = useNavigate()
 
     // Manejar cambio de grupo
     const handleGrupoChange = (e) => {
@@ -56,19 +60,26 @@ const HealthProfile = () => {
     const saveHealthProfile = async () => {
         try {
         // Iterar sobre cada patología en la lista y agregarla a Firestore
-        listDiseases.forEach(async () => {
-            await addDoc(healthprofileCollection, { 
+        // listDiseases.forEach(async () => {            
+        // });
+
+            await addDoc(healthprofileCollection, {
                 userEmail: user.email,
                 listDiseases: listDiseases,
                 heartRate: heartRate,
-                bloodPresure: bloodPresure,
+                sistole: sistole,
+                diastole: diastole,
                 bloodOxigen: bloodOxigen,
                 bloodGlucose: bloodGlucose
+            }).then( () => {
+                Swal.fire("Perfil de salud creado exitosamente.","Perfil Salud Usuario","success");                
+                console.log('Lista de patologías guardada en Firestore');
+                navigate('/Show')
             });
-        });
-        console.log('Lista de patologías guardada en Firestore');
-        // Limpiar la lista de patologías después de guardarla en Firestore
-        setListDiseases([]);
+
+            
+            // Limpiar la lista de patologías después de guardarla en Firestore
+            setListDiseases([]);
         } catch (error) {
         console.error('Error al guardar la lista de patologías en Firestore:', error);
         }
@@ -111,75 +122,108 @@ const HealthProfile = () => {
             </div> 
 
             <div className='row my-4'>
-                <h3>Lista de Patologías:</h3>
-                <ul>
-                    {listDiseases.map((patologia, index) => (
-                        <li key={index}>{patologia}</li>
-                    ))}
-                </ul>
+                <div className="col-md-4">
+                    <h5>Enfermedades Preexistentes:</h5>
+                </div>
+
+                <div className="col-md-8 text-start">
+                    <ul className="list-unstyled">
+                        {listDiseases.map((disease, index) => (
+                            <span key={index} className="badge bg-primary me-2 mb-2">{disease}</span>
+                        ))}
+                    </ul>
+                </div>                
             </div>
 
             <div className="row align-items-center">
-                <div className="col-md-3 my-2">
-                    <label className='form-label'>Frecuencia cardiaca</label>                    
+                <div className="col-md-3 my-2 text-end">
+                    <label className='form-label text-end'>Frecuencia cardiaca</label>                    
                 </div>
 
-                <div className="col-md-3 my-2">
+                <div className="col-md-1 my-2">
                     <input 
                         value={heartRate}
                         onChange={ (e) => setHeartRate(e.target.value)}
-                        type='text'
+                        type='number'
                         className='form-control'
                     />
                 </div>
 
-                <div className="col-md-3">
+                <div className="col-md-8 text-start">
                     <p>Pulsaciones por minuto</p>        
                 </div>
             </div>
 
             <div className="row align-items-center">
-                <div className="col-md-3 my-2">
+
+                <div className="col-md-3 my-2 text-end">
                     <label className='form-label'>Presión arterial</label>                    
                 </div>
-                <div className="col-md-3 my-2">
+
+                <div className="col-md-1 my-2">
                     <input 
-                        value={bloodPresure}
-                        onChange={ (e) => setBloodPresure(e.target.value)}
-                        type='text'
+                        value={sistole}
+                        onChange={ (e) => setSistole(e.target.value)}
+                        type='number'
                         className='form-control'
                     />
-                </div>    
-                <div className="col-md-3">
+                </div>
+
+                <div className="col-md-1 my-2">
+                    <h2>/</h2> 
+                </div>
+
+                <div className="col-md-1 my-2">
+                    <input 
+                        value={diastole}
+                        onChange={ (e) => setDiastole(e.target.value)}
+                        type='number'
+                        className='form-control'
+                    />
+                </div>  
+
+                <div className="col-md-6 text-start">
                     <p>mmHg</p>        
                 </div>            
             </div>
 
             <div className="row align-items-center">
-                <div className="col-md-4 md-4 my-2 mx-2">
+                <div className="col-md-3 my-2 text-end">
                     <label className='form-label'>Oxigeno en sangre</label>                    
                 </div>
-                <div className="col-md-4 md-4 my-2 mx-2">
+
+                <div className="col-md-1 my-2">
                     <input 
                         value={bloodOxigen}
                         onChange={ (e) => setBloodOxigen(e.target.value)}
-                        type='text'
+                        type='number'
                         className='form-control'
                     />
                 </div>
+
+                <div className="col-md-8 my-2 text-start">
+                    <label>%</label> 
+                </div>
             </div>
+
             <div className="row align-items-center">
-                <div className="col-md-4 md-4 my-2 mx-2">
+
+                <div className="col-md-3 my-2 text-end">
                     <label className='form-label'>Glucosa en sangre</label>                    
                 </div>
-                <div className="col-md-4 md-4 my-2 mx-2">
+                <div className="col-md-1 my-2">
                     <input 
                         value={bloodGlucose}
                         onChange={ (e) => setBloodGlucose(e.target.value)}
-                        type='text'
+                        type='number'
                         className='form-control'
                     />
                 </div>
+
+                <div className="col-md-8 text-start">
+                    <p>mg/dL</p>        
+                </div> 
+
             </div>
             <div className="row align-items-center">
                 <div className="col align-items-center my-2">
