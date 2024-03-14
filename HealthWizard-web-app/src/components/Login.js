@@ -16,7 +16,7 @@ const Login = () => {
             .then( (userCredential) => {
                 // Loged in
                 //navigate('/show')
-                navigate('/HealthProfile')
+                navigate('/home')
                 //Swal.fire("Ingreso exitoso","","success");
 
             })

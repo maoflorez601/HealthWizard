@@ -1,4 +1,5 @@
 import './App.css';
+import Home from './components/Home';
 import Show from './components/Show';
 import Edit from './components/Edit';
 import Create from './components/Create';
@@ -6,6 +7,10 @@ import Register from './components/Register'
 import Login from './components/Login'
 import Recover from './components/Recover'
 import HealthProfile from './components/HealthProfile'
+import DietWizard from './components/DietWizard'
+import AddFoodForm from './components/AddFoodForm'
+
+//import de recursos multimedia
 import muscleWizard from './muscle_wizard.png';
 
 import React, { useState, useEffect } from 'react';
@@ -63,12 +68,15 @@ function App() {
         <Container fluid> {/* Utiliza Container fluid de Bootstrap */}        
           <Routes>
             <Route path='/' element={ <Login />} />
+            <Route path='/home' element={ <Home />} />
             <Route path='/register' element={ <Register />} />
             <Route path='/recover' element={ <Recover />} />
             <Route path='/create' element={ <Create />} />
             <Route path='/edit/:id' element={ <Edit />} />
             <Route path='/show' element={ <Show />} />    
             <Route path='/HealthProfile' element={ <HealthProfile />} />   
+            <Route path='/DietWizard' element={ <DietWizard />} /> 
+            <Route path='/AddFood' element={ <AddFoodForm />} /> 
             {/* Redireccionar al inicio si el usuario intenta acceder a rutas protegidas sin iniciar sesión */}
             {!user && <Route path='/*' element={<Navigate to="/" />} />}      
           </Routes>
