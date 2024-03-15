@@ -46,7 +46,7 @@ function App() {
     e.preventDefault()
     await signOut(auth).then(() => {
       // Sign-out successful.
-      window.location.href = '/';
+      window.location.href = '/login';
 
     }).catch((error) => {
       // An error happened.
@@ -62,13 +62,13 @@ function App() {
         {user ? (          
         <p>Bienvenido {user.email} <a href="#" onClick={doSignOut}>Cerrar sesión</a></p>    
         ) : (
-          <p style={{ visibility: location && location.pathname === '/' ? 'hidden' : 'visible' }}><a href="/" >Iniciar sesión</a></p>
+          <p style={{ visibility: location && location.pathname === '/login' ? 'hidden' : 'visible' }}><a href="/login" >Iniciar sesión</a></p>
         )}
       </header> 
         <Container fluid> {/* Utiliza Container fluid de Bootstrap */}        
           <Routes>
-            <Route path='/' element={ <Login />} />
             <Route path='/home' element={ <Home />} />
+            <Route path='/login' element={ <Login />} />
             <Route path='/register' element={ <Register />} />
             <Route path='/recover' element={ <Recover />} />
             <Route path='/create' element={ <Create />} />
@@ -78,7 +78,7 @@ function App() {
             <Route path='/DietWizard' element={ <DietWizard />} /> 
             <Route path='/AddFood' element={ <AddFoodForm />} /> 
             {/* Redireccionar al inicio si el usuario intenta acceder a rutas protegidas sin iniciar sesión */}
-            {!user && <Route path='/*' element={<Navigate to="/" />} />}      
+            {!user && <Route path='/*' element={<Navigate to="/login" />} />}      
           </Routes>
         </Container>
       

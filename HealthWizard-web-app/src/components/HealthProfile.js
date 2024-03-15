@@ -236,7 +236,7 @@ const HealthProfile = () => {
                     </div>            
                 </div>
                 </>
-            ) : ( <h1 className='text-danger'>Inicie sessión para acceder a este contenido</h1> )};
+            ) : ( <h1 className='text-danger'>Inicie sessión para acceder a este contenido</h1> )}
         </div>
         
     )
