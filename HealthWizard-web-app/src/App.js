@@ -10,7 +10,7 @@ import HealthProfile from './components/HealthProfile'
 import DietWizard from './components/DietWizard'
 import AddFoodForm from './components/AddFoodForm'
 
-//import de recursos multimedia Mauricio
+//import de recursos multimedia Esteban
 import muscleWizard from './muscle_wizard.png';
 
 import React, { useState, useEffect } from 'react';
