@@ -37,7 +37,7 @@ const Home = () => {
                         </li>
 
                         <li className="list-group-item bg-dark">
-                            <a href="#" className="text-white">Rutinas de ejercicio</a>
+                            <a href="/rutinas" className="text-white">Rutinas de ejercicio</a>
                         </li>
                     </ul>
                 </div>
