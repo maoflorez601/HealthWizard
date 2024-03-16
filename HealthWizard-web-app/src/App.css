@@ -40,7 +40,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  background-color: #292734
+  background-color: #292734 !important
 }
 
 @keyframes App-logo-spin {
@@ -74,6 +74,11 @@ label {
   color: #ffd166;
 }
 
+h2 {
+  font-weight: bold;
+  color: #ffd166 !important;
+}
+
 .panel p {
   color: #a3a1ac;
 }
@@ -84,12 +89,12 @@ label {
 }
 
 .btn-primary {
-  background-color: #6a57af;
+  background-color: #6a57af !important;
   border: none;
 }
 
 .btn-primary:hover {
-  background-color: #7c68bc;
+  background-color: #7c68bc !important;
 }
 
 a {
@@ -137,4 +142,16 @@ a:hover {
 input:not(:focus)::placeholder {
   color: #ffffff; /* Color del placeholder */
   opacity: 0.7; /* Opacidad del placeholder */
+}
+
+.btn-outline-custom {
+  color: #6a57af !important; /* Color del texto */
+  border-color: #6a57af !important; /* Color del borde */
+  border-style: none !important;
+}
+
+.btn-outline-custom:hover {
+  color: #cfff5f !important; /* Color del texto al pasar el mouse */
+  border-color: #cfff5f !important; /* Color de fondo al pasar el mouse */  
+  border-style: none;
 }
