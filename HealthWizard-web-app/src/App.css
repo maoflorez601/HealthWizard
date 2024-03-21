@@ -90,7 +90,7 @@ h2 {
 
 .btn-primary {
   background-color: #6a57af !important;
-  border: none;
+  border: none !important;
 }
 
 .btn-primary:hover {
@@ -154,4 +154,8 @@ input:not(:focus)::placeholder {
   color: #cfff5f !important; /* Color del texto al pasar el mouse */
   border-color: #cfff5f !important; /* Color de fondo al pasar el mouse */  
   border-style: none;
+}
+
+.card {
+  width: fit-content; /* Ajusta el ancho al contenido */
 }

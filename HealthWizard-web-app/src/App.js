@@ -78,7 +78,7 @@ function App() {
             <Route path='/DietWizard' element={ <DietWizard />} /> 
             <Route path='/AddFood' element={ <AddFoodForm />} /> 
             {/* Redireccionar al inicio si el usuario intenta acceder a rutas protegidas sin iniciar sesión */}
-            {!user && <Route path='/*' element={<Navigate to="/login" />} />}      
+            {!user && <Route path='/*' element={<Navigate to="/home" />} />}      
           </Routes>
         </Container>
       
