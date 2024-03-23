@@ -31,7 +31,7 @@ const Show = () => {
             data.docs.map( (doc) => ( {...doc.data(), id:doc.id}))
         )
         console.log(products);
-    }    
+    }   
 
     // 4. Funcion para eliminar un doc
     const deleteProduct = async (id) => {
@@ -60,8 +60,7 @@ const Show = () => {
                 });
             }
           });
-    }
-    
+    }    
 
     // 6. Uso de useEffect
     useEffect(() => {

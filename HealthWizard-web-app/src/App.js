@@ -80,7 +80,7 @@ function App() {
             <Route path='/AddFood' element={ <AddFoodForm />} /> 
             <Route path='/Rutinas' element={ <Rutinas />} />
             {/* Redireccionar al inicio si el usuario intenta acceder a rutas protegidas sin iniciar sesión */}
-            {!user && <Route path='/*' element={<Navigate to="/login" />} />}      
+            {!user && <Route path='/*' element={<Navigate to="/home" />} />}      
           </Routes>
         </Container>
       

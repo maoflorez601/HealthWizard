@@ -1,0 +1,7 @@
+* Mejorar menú usuario, colocar una imagen de usuario en la esquina superior derecha, como se hace en las distintas plataformas (e.g. Google, Crunchiroll, etc).
+
+* Realizar menu de recuperar contraseña.
+
+* Agregar informamación de consumo recomendado de calorias diarias.
+
+* Agregar información de perdida recomendad de calorias diarias.
