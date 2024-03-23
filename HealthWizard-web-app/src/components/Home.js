@@ -1,4 +1,6 @@
+// Home.js
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'; // Importa Link desde react-router-dom
 
 import { getAuth } from "firebase/auth";
 
@@ -25,24 +27,24 @@ const Home = () => {
 
                     <ul className="list-group">
                         <li className="list-group-item bg-dark">
-                            <a href="/HealthProfile" className="text-white">Actualizar perfil de salud</a>
+                            <Link to="/HealthProfile" className="text-white">Actualizar perfil de salud</Link> {/* Usa Link en lugar de <a> */}
                         </li>
 
                         <li className="list-group-item bg-dark">
-                            <a href="/DietWizard" className="text-white">Información nutricional</a>
+                            <Link to="/DietWizard" className="text-white">Información nutricional</Link> {/* Usa Link en lugar de <a> */}
                         </li>                        
 
                         <li className="list-group-item bg-dark">
-                            <a href="/AddFood" className="text-white">Agregar alimentos</a>
+                            <Link to="/AddFood" className="text-white">Agregar alimentos</Link> {/* Usa Link en lugar de <a> */}
                         </li>
 
                         <li className="list-group-item bg-dark">
-                            <a href="/rutinas" className="text-white">Rutinas de ejercicio</a>
+                            <Link to="/rutinas" className="text-white">Rutinas de ejercicio</Link> {/* Usa Link en lugar de <a> */}
                         </li>
                     </ul>
                 </div>
             </>
-            ) : ( <h1 className='text-danger'>Inicie sessión para acceder a este contenido</h1> )        
+            ) : ( <h1 className='text-danger'>Inicie sesión para acceder a este contenido</h1> )        
         }
     </div>
   )
