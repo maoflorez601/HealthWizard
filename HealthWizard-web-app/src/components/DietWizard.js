@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquarePlus } from '@fortawesome/free-regular-svg-icons';
 import { Modal, Button } from 'react-bootstrap'; // Importa el componente Modal y Button de react-bootstrap
 import Swal from 'sweetalert2';
+import ProgressBar from 'react-bootstrap/ProgressBar'; //estilos de barras de progreso
 
 //importaciones para db firestore
 import { collection, query, where, getDocs, addDoc } from 'firebase/firestore'; // Importa los métodos necesarios de Firestore para realizar consultas
@@ -109,9 +110,7 @@ const DietWizard = () => {
 
     //funcion para cargar el perfil de dieta del usuario
     const fetchDiets = async () => {
-        try {            
-            //console.log("email user: " + user.email)
-
+        try {     
             // Obtener la fecha de inicio del día seleccionado
             const startOfDay = new Date(selectedDate);
             startOfDay.setHours(0, 0, 0, 0);
@@ -137,20 +136,43 @@ const DietWizard = () => {
                 // Obtener la subcolección "foods" para cada dieta
                 const foodsRef = collection(db, 'diets', doc.id, 'foods');
                 const foodsSnapshot = await getDocs(foodsRef);
-                const foods = foodsSnapshot.docs.map(foodDoc => ({
-                    id: foodDoc.id,
-                    ...foodDoc.data()
-                }));
+
+                let proteins = 0;
+                let carbs = 0;
+                let fat = 0;
+                
+                const foods = foodsSnapshot.docs.map(foodDoc => {
+                    //console.log(foodDoc.data().carbohidratos);
+
+                    //Procedimiento para calcular los totales de proteinas, carbohidratos, grasas y calorias
+                    proteins += Number(foodDoc.data().proteinas);
+                    carbs += Number(foodDoc.data().carbohidratos);
+                    fat += Number(foodDoc.data().grasas);
+
+                    //console.log("proteins: "+ proteins);      
+                    return {
+                        id: foodDoc.id,
+                        ...foodDoc.data()
+                    }                    
+                });
+
+                //Formula para calcular calorias    
+                let calories = (proteins * 4) + (carbs * 4) + (fat * 9);
+
+                //calculo de totales mostrados en pantalla
+                setTotalProtein(proteins);
+                setTotalCarbs(carbs);
+                setTotalFat(fat);
+                setTotalCalories(calories);
+
+                //console.log("calorias totales: " + totalCalories);
 
                 //al final retorna los campos de dieta junto con la coleccion de foods
                 return { id: doc.id, ...dietData, foods };
             }));
-            //console.log(fetchedDiets);
 
             // Actualizar el estado con las dietas recuperadas
-            setDiets(fetchedDiets); 
-
-            calculateTotals();            
+            setDiets(fetchedDiets);          
 
         } catch (error) {
             console.error('Error al recuperar las dietas:', error);
@@ -199,38 +221,6 @@ const DietWizard = () => {
     const handleFoodChange = (e) => {
         const selectedFoodObject = foods.find(food => food.nombre === e.target.value);
         setSelectedFood(selectedFoodObject); // Asigna el objeto food completo como selectedFood
-    };
-
-
-    // Función para calcular el total de calorías, grasas, carbohidratos y proteínas
-    const calculateTotals = async () => {
-        let proteins = 0;
-        let carbs = 0;
-        let fat = 0;
-        let calories = 0;        
-
-        if (Array.isArray(diets)){            
-            await Promise.all(diets.map((diet) => {
-                console.log("ID de diet: "+diet.id);               
-                
-                diet.foods.forEach((food) => {
-                    proteins += Number(food.proteinas);
-                    carbs += Number(food.carbohidratos);
-                    fat += Number(food.grasas);
-                    calories += Number((food.proteinas * 4) + (food.carbohidratos * 4) + (food.grasas * 9));
-                });
-            }));
-    
-            setTotalProtein(proteins);
-            setTotalCarbs(carbs);
-            setTotalFat(fat);
-            setTotalCalories(calories);
-        }
-
-        // console.log("total proteinas: " + proteins);
-        // console.log("total carbs: " + carbs);
-        // console.log("total grasas: " + fat);
-        // console.log("total calorias: " + calories);        
     };
 
     // Guardar lista de patologías en BD Firestore
@@ -285,7 +275,7 @@ const DietWizard = () => {
         return () => {
             unsubscribe(); // Limpia el observador cuando el componente se desmonta
         }       
-    }, [diets, selectedCategory]); //selectedCategory
+    }, [selectedCategory]); //selectedCategory
 
     
   return (
@@ -310,25 +300,60 @@ const DietWizard = () => {
                 <button className="btn btn-primary" onClick={ saveDietProfile }>Guardar cambios</button>  
                 </div>
             </div>
-            <div className="border p-3 mb-4">            
-
+            <div className="border p-3 mb-4 ">            
+                {/* <div className="progress" style={{ height: '30px' }}>
+                <div className="progress-bar bg-warning" role="progressbar" style={{ width: `${(totalCalories / 1000) * 100}%` }} aria-valuenow={totalCalories} aria-valuemin="0" aria-valuemax="1000">Calorias: {totalCalories}</div>
+                </div> */}
                 <h2>Conteo Total</h2>
-                <p>Total de Calorías: {totalCalories}</p>
-                <div className="progress" style={{ height: '30px' }}>
-                <div className="progress-bar bg-warning" role="progressbar" style={{ width: `${totalCalories}%` }} aria-valuenow={totalCalories} aria-valuemin="0" aria-valuemax="100">Calorias: {totalCalories}%</div>
-                </div>                
-                <span>Total Grasas</span>
-                <div className="progress" style={{ height: '30px' }}>                    
-                    <div className="progress-bar bg-danger" role="progressbar" style={{ width: `${totalFat}%` }} aria-valuenow={totalFat} aria-valuemin="0" aria-valuemax="100">Grasas: {totalFat}%</div>
+                
+                <div className="row align-items-center">
+                    <div className="col-md-2 my-2 text-end">
+                        <span style={{ fontWeight: 'bold' }}>Total Calorias</span>
+                    </div>
+                    <div className="col-md-5">
+                        <ProgressBar animated variant="danger" 
+                            now={(totalCalories / 1000) * 100} 
+                            label={<span style={{ fontWeight: 'bold' }}>{totalCalories}</span>}
+                        />
+                    </div>
                 </div>
-                <span>Total Carbohidratos</span>
-                <div className="progress mt-2" style={{ height: '30px' }}>
-                    <div className="progress-bar bg-success" role="progressbar" style={{ width: `${totalCarbs}%` }} aria-valuenow={totalCarbs} aria-valuemin="0" aria-valuemax="100">Carbohidratos: {totalCarbs}%</div>
+
+                <div className="row align-items-center">
+                    <div className="col-md-2 my-2 text-end">
+                        <span style={{ fontWeight: 'bold' }}>Total Proteínas </span>
+                    </div>
+                    <div className="col-md-5">
+                        <ProgressBar animated variant="success" 
+                            now={totalProtein} 
+                            label={<span style={{ fontWeight: 'bold' }}>{totalProtein}</span>}
+                        /> 
+                    </div>
                 </div>
-                <span>Total Total Proteinas</span>
-                <div className="progress mt-2" style={{ height: '30px' }}>
-                    <div className="progress-bar bg-primary" role="progressbar" style={{ width: `${totalProtein}%` }} aria-valuenow={totalProtein} aria-valuemin="0" aria-valuemax="100">Proteínas: {totalProtein}%</div>
+
+                <div className="row align-items-center">
+                    <div className="col-md-2 my-2 text-end">
+                        <span style={{ fontWeight: 'bold' }}>Total Carbohidratos </span>
+                    </div>
+                    <div className="col-md-5">
+                        <ProgressBar animated variant="dark" 
+                            now={totalCarbs} 
+                            label={<span style={{ fontWeight: 'bold' }}>{totalCarbs}</span>}
+                        /> 
+                    </div>
                 </div>
+
+                <div className="row align-items-center">
+                    <div className="col-md-2 my-2 text-end">
+                        <span style={{ fontWeight: 'bold' }}>Total Grasas </span>
+                    </div>
+                    <div className="col-md-5">
+                        <ProgressBar animated variant="warning" 
+                            now={totalFat} 
+                            label={<span style={{ color: 'crimson', fontWeight: 'bold' }}>{totalFat}</span>}
+                        /> 
+                    </div>
+                </div>     
+
             </div>
 
             {Array.isArray(diets) ? (diets.map((diet) => (          
