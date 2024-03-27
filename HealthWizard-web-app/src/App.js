@@ -9,9 +9,8 @@ import Recover from './components/Recover'
 import HealthProfile from './components/HealthProfile'
 import DietWizard from './components/DietWizard'
 import AddFoodForm from './components/AddFoodForm'
-import Rutinas from './components/Rutinas'
 
-//import de recursos multimedia 
+//import de recursos multimedia Esteban trata editar desde portato
 import muscleWizard from './muscle_wizard.png';
 
 import React, { useState, useEffect } from 'react';
@@ -78,7 +77,6 @@ function App() {
             <Route path='/HealthProfile' element={ <HealthProfile />} />   
             <Route path='/DietWizard' element={ <DietWizard />} /> 
             <Route path='/AddFood' element={ <AddFoodForm />} /> 
-            <Route path='/Rutinas' element={ <Rutinas />} />
             {/* Redireccionar al inicio si el usuario intenta acceder a rutas protegidas sin iniciar sesión */}
             {!user && <Route path='/*' element={<Navigate to="/home" />} />}      
           </Routes>
