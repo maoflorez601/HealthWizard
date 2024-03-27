@@ -117,6 +117,35 @@ PASS: mauro123
 
 
 ################################################################################
+9. HOSTING DE APLICACION USANDO FIREBASE
+
+* Instalar Firebase CLI desde CMD (usando el instalador de paquetes de nodejs)
+npm install -g firebase-tools
+
+* Iniciar sesión con google ejecutando el siguiente comando:
+firebase login [después de aceptar las politicas de tratamiento de datos, se abrirá la el modulo de login desde el navegador, seguir todas las intrucciones]
+NOTA: si se está logueado con otra cuenta se puede usar el comando para desloguearse: firebase logout.
+
+* Probar que la CLI de firebase esté bien instalada ejecutando el siguiente comando:
+firebase projects:list [se listan todos los proyectos asociados a firebase, debe de aparecer el de HealthWizard]
+
+* Desde su PC, ir a la raiz donde tiene alojado el proyecto (...\HealthWizard-web-app) y ejecutar el siguiente comando desde el CMD:
+firebase init
+
+Despues de dar (y) para proceder aparecen un menú de opciones de instalación que se señalan con espacio, señalar las siguientes:
+ (*) Firestore: Configure security rules and indexes files for Firestore
+ (*) Functions: Configure a Cloud Functions directory and its files
+ (*) Hosting: Configure files for Firebase Hosting and (optionally) set up GitHub Action deploys
+>(*) Hosting: Set up GitHub Action deploys
+
+Despues de esto se configurará la creación de la aplicación a través de una series de preguntas, consultar el archivo: config_firebase_init.txt para configurar el proyecto de esa manera.
+
+* Desplegar el aplicativo desde firebase:
+firebase deploy
+
+
+
+################################################################################
 
 *** VIDEO TUTORIALES ***
 
@@ -142,8 +171,5 @@ https://github.com/infodp/react_firebase_app_CRUD
 REPO EJEMPLO AUTENTICACION CON FIREBASE Y REACT
 https://github.com/Nitij/react-firebase-auth-boilerplate
 
-FITBOX EJEMPLO
-D:\Documents\Materias UAO\Semestre 2\Proyecto Informático\Proyecto FitBox
-
-CARPETA PROYECTO
-D:\Documents\Materias UAO\Semestre 4\Proyecto Informatico 2\Proyecto Health Wizard
+Firebase Hosting - Subir una Pagina Web a Firebase
+https://youtu.be/a-HMnyv75TQ?si=5MuD-j_QIYPGUfG-
